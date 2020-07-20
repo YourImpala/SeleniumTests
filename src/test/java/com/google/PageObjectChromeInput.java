@@ -22,8 +22,17 @@ public class PageObjectChromeInput {
         searchField.sendKeys(wordFind);
         searchField.sendKeys(Keys.ENTER);
     }
-    public List<WebElement> getResults() {
-        return chromeDriver.findElements(By.xpath("//*[@id=\"rso\"]//*[@class=\"g\"]"));
+    public List<WebElement> getResults(String element) {
+        String path = null;
+
+        if(element.equals("body")){
+            path = "//*[@id=\"rso\"]//*[@class=\"g\"]";
+        }
+        else if (element.equals("link")) {
+            path = "//*[@class=\"iUh30 bc tjvcx\"]";
+        }
+
+        return chromeDriver.findElements(By.xpath(path));
     }
 }
 
