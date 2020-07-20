@@ -22,7 +22,8 @@ public class PageObjectChromeInput {
         searchField.sendKeys(wordFind);
         searchField.sendKeys(Keys.ENTER);
     }
-    public List<WebElement> getSearchResults() {
+    public List<WebElement> getResults() {
         return chromeDriver.findElements(By.xpath("//*[@id=\"rso\"]//*[@class=\"g\"]"));
     }
 }
+

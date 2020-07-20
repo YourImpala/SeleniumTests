@@ -11,12 +11,17 @@ public class Tests extends WebDriverSettings{
     private String URL = "https://www.google.com/";
     private String SEARCH_WORD = "гладиолус";
 
+    public List<WebElement> getInputSearchResults(String url, String searchWord) {
+        chromeDriver.get(url);
+        PageObjectChromeInput pageObjectInput = new PageObjectChromeInput(chromeDriver);
+        pageObjectInput.findByPressEnter(searchWord);
+
+        return pageObjectInput.getResults();
+    }
+
     @Test
     public void moreThanThreeSearchResultsAWord() {
-        chromeDriver.get(URL);
-        PageObjectChromeInput pageObjectInput = new PageObjectChromeInput(chromeDriver);
-        pageObjectInput.findByPressEnter(SEARCH_WORD);
-        List<WebElement> searchResults = pageObjectInput.getSearchResults();
+        List<WebElement> searchResults = getInputSearchResults(URL, SEARCH_WORD);
 
         Assertions.assertTrue(
                 searchResults.size() > 3,
@@ -26,10 +31,7 @@ public class Tests extends WebDriverSettings{
 
     @Test
     public void theLinkToWikipediaForTheRequestedWordExists() {
-        chromeDriver.get(URL);
-        PageObjectChromeInput pageObjectInput = new PageObjectChromeInput(chromeDriver);
-        pageObjectInput.findByPressEnter(SEARCH_WORD);
-        List<WebElement> searchResults = pageObjectInput.getSearchResults();
+        List<WebElement> searchResults = getInputSearchResults(URL, SEARCH_WORD);
 
         Assertions.assertTrue(
                 searchResults.stream().anyMatch(x -> x.getText().contains("ru.wikipedia.org")),
