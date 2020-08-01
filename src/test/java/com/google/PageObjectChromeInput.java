@@ -5,34 +5,30 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.util.List;
 
 public class PageObjectChromeInput {
-    private WebDriver chromeDriver;
+    private WebDriver driver;
+
+    private String searchWord;
+    private String selectorSearchField = "//input[@class='gLFyf gsfi']";
     private WebElement searchField;
 
 
-    PageObjectChromeInput(WebDriver chromeDriver){
-        this.chromeDriver = chromeDriver;
-        this.searchField = chromeDriver.findElement(By.xpath("//*[@id=\"tsf\"]/div[2]/div[1]/div[1]/div/div[2]/input"));
+    PageObjectChromeInput(WebDriver chromeDriver, String word){
+        this.driver = chromeDriver;
+        this.driver.get("https://www.google.ru/");
+        searchWord = word;
+        searchField = driver.findElement(By.xpath(selectorSearchField));
+
     }
 
-    public void findByPressEnter(String wordFind){
+
+    public void search() {
         searchField.click();
-        searchField.sendKeys(wordFind);
+        searchField.sendKeys(searchWord);
         searchField.sendKeys(Keys.ENTER);
     }
-    public List<WebElement> getResults(String element) {
-        String path = null;
 
-        if(element.equals("body")){
-            path = "//*[@id=\"rso\"]//*[@class=\"g\"]";
-        }
-        else if (element.equals("link")) {
-            path = "//*[@class=\"iUh30 bc tjvcx\"]";
-        }
 
-        return chromeDriver.findElements(By.xpath(path));
-    }
 }
 
